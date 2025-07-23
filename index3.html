@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form Validation</title>
+
+</head>
+
+<body>
+
+    <form id="myForm" novalidate>
+        <label>Full Name:
+            <input type="text" id="fullName">
+            <span class="error" id="fullNameError"></span>
+        </label>
+
+        <label>Email:
+            <input type="email" id="email">
+            <span class="error" id="emailError"></span>
+        </label>
+
+        <label>Password:
+            <input type="password" id="password">
+            <span class="error" id="passwordError"></span>
+        </label>
+
+        <label>Confirm Password:
+            <input type="password" id="confirmPassword">
+            <span class="error" id="confirmPasswordError"></span>
+        </label>
+
+        <button type="submit">Submit</button>
+        <span class="success" id="successMessage"></span>
+    </form>
+
+    <script>
+        const form = document.getElementById("myForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+
+            document.getElementById("fullNameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("confirmPasswordError").textContent = "";
+            document.getElementById("successMessage").textContent = "";
+
+            const fullName = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            let valid = true;
+
+            if (fullName === "") {
+                document.getElementById("fullNameError").textContent = "Full Name is required.";
+                valid = false;
+            }
+
+            if (email === "") {
+                document.getElementById("emailError").textContent = "Email is required.";
+                valid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById("emailError").textContent = "Invalid email format.";
+                valid = false;
+            }
+
+            if (password.length < 6) {
+                document.getElementById("passwordError").textContent = "Password must be at least 6 characters.";
+                valid = false;
+            }
+            if (password === "") {
+                document.getElementById("passwordError").textContent = "password required";
+                valid = false;
+
+            }
+
+            if (confirmPassword !== password) {
+                document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+                valid = false;
+            }
+
+            if (valid) {
+                document.getElementById("successMessage").textContent = "Form submitted successfully!";
+                form.reset();
+            }
+        });
+
+
+    </script>
+
+</body>
+
+</html>
